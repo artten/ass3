@@ -1,9 +1,12 @@
+import biuoop.DrawSurface;
+
 /**
  * @author 319339198
  * Blocks of the game
  */
 public class Block implements Collidable {
     private Rectangle block;
+    private java.awt.Color color;
 
     /**
      * creates a new Block.
@@ -35,7 +38,7 @@ public class Block implements Collidable {
             return new Point(-1,1);
         }
         if(collisionPoint.getY() == block.getBottomLeft().getY()
-                || collisionPoint.getY() == block.getBottomRight().getY()) {
+                || collisionPoint.getY() == block.getUpperRight().getY()) {
             return new Point(1,-1);
         }
         return new Point(1,1);
@@ -53,6 +56,15 @@ public class Block implements Collidable {
         Velocity newVelocity = new Velocity(currentVelocity.getDx() * velocityChange.getX(),
                 currentVelocity.getDy() * velocityChange.getY());
         return newVelocity;
+    }
+
+    /**
+     * draw this block on the surface.
+     * @param surface - the surface to draw on
+     */
+    public void drawOn(DrawSurface surface) {
+        surface.setColor(this.color);
+       // surface.fillRectangle(this.block.getUpperRight().getX());
     }
 }
 

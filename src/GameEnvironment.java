@@ -39,13 +39,15 @@ public class GameEnvironment {
             if(collidable instanceof Block) {
                 Rectangle block = collidable.getCollisionRectangle();
                 Point closestCollision = trajectory.closestIntersectionToStartOfLine(block);
-                if(collisionInfo == null) {
-                    collisionInfo = new CollisionInfo(closestCollision,collidable);
-                }
-                else {
-                    if (trajectory.start().distance(closestCollision)
-                            < trajectory.start().distance(collisionInfo.collisionPoint())){
+                if(closestCollision != null) {
+                    if(collisionInfo == null) {
                         collisionInfo = new CollisionInfo(closestCollision,collidable);
+                    }
+                    else {
+                        if (trajectory.start().distance(closestCollision)
+                                < trajectory.start().distance(collisionInfo.collisionPoint())){
+                            collisionInfo = new CollisionInfo(closestCollision,collidable);
+                        }
                     }
                 }
             }

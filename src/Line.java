@@ -68,8 +68,21 @@ public class Line {
      * @return true if x is in the line else return false
      */
     public boolean xInTheLine(double x) {
-        if ((x < this.start.getX() && x > this.end.getX())
-                || x > this.start.getX() && x < this.end.getX()) {
+        if ((x <= this.start.getX() && x >= this.end.getX())
+                || (x >= this.start.getX() && x <= this.end.getX())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * check if x is in the line.
+     * @param y - the x value to check
+     * @return true if x is in the line else return false
+     */
+    public boolean yInTheLine(double y) {
+        if ((y <= this.start.getY() && y >= this.end.getY())
+                || (y >= this.start.getY() && y <= this.end.getY())) {
             return true;
         }
         return false;
@@ -84,8 +97,10 @@ public class Line {
         Function thisFunc = new Function(this.start, this.end);
         Function otherFunc = new Function(other.start, other.end);
         Point newPoint = thisFunc.functionsInteract(otherFunc);
-        if (newPoint != null && xInTheLine(newPoint.getX())
-                && other.xInTheLine(newPoint.getX())) {
+        if (newPoint != null && this.xInTheLine(newPoint.getX())
+                && other.xInTheLine(newPoint.getX())
+                && this.yInTheLine(newPoint.getY())
+                && other.yInTheLine(newPoint.getY())) {
             return true;
         }
         return false;

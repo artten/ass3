@@ -2,6 +2,7 @@
  * @author 319339198
  */
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,14 +33,13 @@ public class Rectangle {
      * @return list of point that intersect with the line
      */
     public java.util.List<Point> intersectionPoints(Line line) {
-        java.util.List<Point> intersectionPoints = null;
         Point point = null;
         Line x1 = new Line(this.getUpperLeft(), this.getUpperRight());
         Line x2 = new Line(this.getBottomLeft(), this.getBottomRight());
         Line y1 = new Line(this.getUpperLeft(), this.getBottomLeft());
         Line y2 = new Line(this.getUpperRight(), this.getUpperRight());
 
-        java.util.List<Point> intersections = null;
+        java.util.LinkedList<Point> intersections = new LinkedList<>();
 
         if (line.isIntersecting(x1)) {
             intersections.add(line.intersectionWith(x1));
@@ -56,7 +56,7 @@ public class Rectangle {
         if (line.isIntersecting(y2)) {
             intersections.add(line.intersectionWith(y2));
         }
-        return intersectionPoints;
+        return intersections;
     }
 
     /**

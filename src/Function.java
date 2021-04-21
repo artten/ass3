@@ -5,6 +5,7 @@
 
 public class Function {
     private boolean vertical = false;
+    private boolean parallel = false;
     private double slope;
     private double constant;
 
@@ -19,6 +20,10 @@ public class Function {
             this.vertical = true;
             return 0;
         }
+        if (one.getY() - two.getY() == 0) {
+            this.parallel = true;
+            return 0;
+        }
         return (one.getY() - two.getY()) / (one.getX() - two.getX());
     }
 
@@ -29,8 +34,8 @@ public class Function {
      * @return the constant of the function
      */
     private double constant(Point one, double slopeValue) {
-        if (vertical) {
-            return one.getY();
+        if (isVertical()) {
+            return one.getX();
         }
         return (one.getY() - slopeValue * one.getX());
     }
@@ -82,12 +87,23 @@ public class Function {
     }
 
     /**
+     * return parallel value.
+     * @return parallel value
+     */
+    public boolean isParallel() {
+        return this.parallel;
+    }
+
+    /**
      * check if there is a point where other function and this function.
      * interact
      * @param other - another function
      * @return a point that contains x and y value with the interaction value
      */
     public Point functionsInteract(Function other) {
+        if(this.vertical && other.isVertical() || this.parallel && other.isParallel()) {
+            return null;
+        }
         if (this.vertical) {
             return  new Point(this.constant, other.getYbyX(this.constant));
         }
