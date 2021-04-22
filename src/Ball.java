@@ -7,11 +7,12 @@ import biuoop.DrawSurface;
 /**
  * one dimension ball.
  */
-public class Ball {
+public class Ball implements Sprite {
     private Point center;
     private double radius;
     private java.awt.Color color;
     private Velocity velocity;
+    private GameEnvironment gameEnvironment;
 
     /**
      * constructor.
@@ -23,6 +24,19 @@ public class Ball {
         this.center = center;
         this.radius = r;
         this.color = color;
+    }
+
+    /**
+     * constructor.
+     * @param center - center of the ball
+     * @param r - radius of the ball
+     * @param color - color of the ball
+     */
+    public Ball(Point center, double r, java.awt.Color color, GameEnvironment gameEnvironment) {
+        this.center = center;
+        this.radius = r;
+        this.color = color;
+        this.gameEnvironment = gameEnvironment;
     }
 
     /**
@@ -44,6 +58,14 @@ public class Ball {
      */
     public double getX() {
         return (int) this.center.getX();
+    }
+
+    /**
+     * get the x value of the ball.
+     * @return the x position of the ball
+     */
+    public GameEnvironment getGameEnvironment() {
+        return this.gameEnvironment;
     }
 
     /**
@@ -77,6 +99,11 @@ public class Ball {
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.color);
         surface.fillCircle((int) center.getX(), (int) center.getY(), (int) radius);
+    }
+
+    @Override
+    public void timePassed() {
+        moveOneStep(this.center, this.gameEnvironment);
     }
 
     /**
@@ -158,6 +185,15 @@ public class Ball {
         if (height == center.getY() + radius - start.getY() || 0 == center.getY() - radius - start.getY()) {
             velocity = new Velocity(velocity.getDx(), -velocity.getDy());
         }
+    }
+
+    /**
+     * add the ball to the game.
+     * @param game - the game object
+     */
+    public void addToGame(Game game) {
+
+        game.addSprite(this);
     }
 
 }

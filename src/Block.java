@@ -4,7 +4,7 @@ import biuoop.DrawSurface;
  * @author 319339198
  * Blocks of the game
  */
-public class Block implements Collidable {
+public class Block implements Collidable, Sprite {
     private Rectangle block;
     private java.awt.Color color;
 
@@ -14,6 +14,23 @@ public class Block implements Collidable {
      */
     public Block(Rectangle rectangle) {
         this.block = rectangle;
+    }
+
+    /**
+     * creates a new Block.
+     * @param rectangle - the new block
+     */
+    public Block(Rectangle rectangle, java.awt.Color color) {
+        this.block = rectangle;
+        this.color = color;
+    }
+
+    /**
+     * creates a new Block.
+     * @return this color block
+     */
+    public java.awt.Color getColor() {
+        return this.color;
     }
 
     /**
@@ -64,7 +81,27 @@ public class Block implements Collidable {
      */
     public void drawOn(DrawSurface surface) {
         surface.setColor(this.color);
-       // surface.fillRectangle(this.block.getUpperRight().getX());
+        surface.fillRectangle((int) this.block.getUpperLeft().getX(),
+                (int) this.block.getUpperLeft().getY(),
+                (int) this.block.getWidth(),
+                (int) this.block.getHeight());
+    }
+
+    /**
+     * what should the  block do after some time
+     */
+    @Override
+    public void timePassed() {
+
+    }
+
+    /**
+     * add the ball to the game.
+     * @param game - the game object
+     */
+    public void addToGame(Game game) {
+        game.addSprite(this);
+        game.addCollidable(this);
     }
 }
 

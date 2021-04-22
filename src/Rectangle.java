@@ -37,7 +37,7 @@ public class Rectangle {
         Line x1 = new Line(this.getUpperLeft(), this.getUpperRight());
         Line x2 = new Line(this.getBottomLeft(), this.getBottomRight());
         Line y1 = new Line(this.getUpperLeft(), this.getBottomLeft());
-        Line y2 = new Line(this.getUpperRight(), this.getUpperRight());
+        Line y2 = new Line(this.getUpperRight(), this.getBottomRight());
 
         java.util.LinkedList<Point> intersections = new LinkedList<>();
 
