@@ -4,9 +4,11 @@
 
 import biuoop.DrawSurface;
 import biuoop.GUI;
+import biuoop.KeyboardSensor;
 import biuoop.Sleeper;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * the Game
@@ -15,8 +17,10 @@ public class Game {
     private SpriteCollection sprites;
     private GameEnvironment environment;
     private GUI gui;
+    private KeyboardSensor keyboard;
     private final int WIDTH = 800;
     private final int HEIGHT = 600;
+
 
     /**
      * add a new collidable.
@@ -41,24 +45,79 @@ public class Game {
         this.gui = new GUI("Cool Game", WIDTH, HEIGHT);
         sprites = new SpriteCollection();
         environment = new GameEnvironment();
+        this.keyboard =  gui.getKeyboardSensor();
     }
+
+    /**
+     * initialize the game the balls for the game.
+     * @param num -number of balls
+     * @param startPoint - the start point of the paddle
+     * @param width - with of the paddle
+     */
+    public void initializeBalls(int num, Point startPoint, int width) {
+        for (int i = 0; i < num; i++ ) {
+            Random rn = new Random();
+            int startWidth = rn.nextInt(width) + 1;
+            Point newPoint = new Point((int) startPoint.getX() + startWidth, (int) startPoint.getY());
+            Ball ball =  new Ball(newPoint , 6, Color.BLACK, this.environment);
+            ball.setVelocity(0,5);
+            ball.addToGame(this);
+        }
+    }
+
+    /**
+     * initialize the the border for the game.
+     * @param size - size of the blocks
+     * @param color - color fpr the blocks
+     */
+    public void initializeBorder(int size, java.awt.Color color) {
+        for (int i = 0; i < 4; i++ ) {
+            Block block = new Block(new Rectangle(new Point(0,0),WIDTH,size), color);
+            block.addToGame(this);
+            block = new Block(new Rectangle(new Point(0,0),size,HEIGHT), color);
+            block.addToGame(this);
+            block = new Block(new Rectangle(new Point(WIDTH - size,0),size,HEIGHT), color);
+            block.addToGame(this);
+            block = new Block(new Rectangle(new Point(0,HEIGHT - size),WIDTH,size), color);
+            block.addToGame(this);
+        }
+    }
+
+    /**
+     *
+     * @param raws - num of raws
+     * @param width - width of a block
+     * @param height - height of one block
+     * @param shift - shift from the top and left sides
+     */
+    public void initializeBlocks(int raws, int width, int height,int shift) {
+        Block block;
+        for (int i = 0; i < raws; i++ ) {
+            Random rand = new Random();
+            int numOfBlocks = rand.nextInt((WIDTH - shift)/width) + 1;
+            float r = rand.nextFloat();
+            float g = rand.nextFloat();
+            float b = rand.nextFloat();
+            Color randomColor = new Color(r, g, b);
+            for (int j = 0; j < numOfBlocks; j++) {
+                block = new Block(new Rectangle(new Point(shift + j * width,shift + (height * (i+1)) + height * 5),width,height), randomColor);
+                block.addToGame(this);
+            }
+        }
+    }
+
     /**
      * initialize the game.
      */
     public void initialize() {
-
-        java.awt.Color color = Color.blue;
-        Block block = new Block(new Rectangle(new Point(0,0),WIDTH,30), color);
-        block.addToGame(this);
-        block = new Block(new Rectangle(new Point(0,0),30,HEIGHT), color);
-        block.addToGame(this);
-        block = new Block(new Rectangle(new Point(770,0),30,HEIGHT), color);
-        block.addToGame(this);
-        block = new Block(new Rectangle(new Point(0,570),WIDTH,30), color);
-        block.addToGame(this);
-        Ball ball =  new Ball(new Point(350, 500), 5, java.awt.Color.BLACK, this.environment);
-        ball.setVelocity(-3,5);
-        ball.addToGame(this);
+        java.awt.Color color = Color.red;
+        Block paddleBlock = new Block(new Rectangle(new Point(400,570),50,10), color);
+        Paddle paddle = new Paddle(this.keyboard, paddleBlock);
+        paddle.addToGame(this);
+        color = Color.blue;
+        initializeBlocks(6, 50, 30, 20);
+        initializeBorder(20, Color.GRAY);
+        initializeBalls(2, new Point(400, 440), 50);
     }
 
     /**
@@ -70,7 +129,6 @@ public class Game {
         Sleeper sleeper = new Sleeper();
         while (true) {
             long startTime = System.currentTimeMillis(); // timing
-
             DrawSurface d = gui.getDrawSurface();
             this.sprites.drawAllOn(d);
             gui.show(d);

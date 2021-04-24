@@ -41,6 +41,7 @@ public class Rectangle {
 
         java.util.LinkedList<Point> intersections = new LinkedList<>();
 
+
         if (line.isIntersecting(x1)) {
             intersections.add(line.intersectionWith(x1));
         }

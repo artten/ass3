@@ -36,7 +36,7 @@ public class GameEnvironment {
     public CollisionInfo getClosestCollision(Line trajectory) {
         CollisionInfo collisionInfo = null;
         for (Collidable collidable : this.collidables) {
-            if(collidable instanceof Block) {
+            //if(collidable instanceof Block) {
                 Rectangle block = collidable.getCollisionRectangle();
                 Point closestCollision = trajectory.closestIntersectionToStartOfLine(block);
                 if(closestCollision != null) {
@@ -50,7 +50,7 @@ public class GameEnvironment {
                         }
                     }
                 }
-            }
+           // }
         }
         return collisionInfo;
     }

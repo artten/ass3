@@ -138,7 +138,7 @@ public class Ball implements Sprite {
      */
     public void moveOneStep(Point start, GameEnvironment gameEnvironment) {
         Line trajectory = new Line(center, this.getVelocity().applyToPoint(this.center));
-        if(gameEnvironment.getClosestCollision(trajectory) == null) {
+        if (gameEnvironment.getClosestCollision(trajectory) == null) {
             this.center = this.getVelocity().applyToPoint(this.center);
         }
         else {
@@ -146,29 +146,28 @@ public class Ball implements Sprite {
             Velocity oldVelocity = this.velocity;
             this.velocity = collisionInfo.collisionObject().hit(collisionInfo.collisionPoint(),
                     this.velocity);
-            if(oldVelocity.getDx() != this.velocity.getDx()) {
+            if (oldVelocity.getDx() != this.velocity.getDx()) {
                 if(this.velocity.getDx() > 0) {
-                    this.center = new Point(collisionInfo.collisionPoint().getX() + radius,
+                    this.center = new Point(collisionInfo.collisionPoint().getX() + radius + 2,
                             collisionInfo.collisionPoint().getY());
                 }
                 else {
-                    this.center = new Point(collisionInfo.collisionPoint().getX()- radius,
+                    this.center = new Point(collisionInfo.collisionPoint().getX()- radius - 2,
                             collisionInfo.collisionPoint().getY());
                 }
 
             }
-            if(oldVelocity.getDy() != this.velocity.getDy()) {
+             if (oldVelocity.getDy() != this.velocity.getDy()) {
                 if(this.velocity.getDy() > 0) {
                     this.center = new Point(collisionInfo.collisionPoint().getX(),
-                            collisionInfo.collisionPoint().getY() + radius);
+                            collisionInfo.collisionPoint().getY() + radius + 2);
                 }
                 else {
                     this.center = new Point(collisionInfo.collisionPoint().getX(),
-                            collisionInfo.collisionPoint().getY() - radius);
+                            collisionInfo.collisionPoint().getY() - radius - 2);
                 }
 
             }
-
         }
     }
 
@@ -192,7 +191,6 @@ public class Ball implements Sprite {
      * @param game - the game object
      */
     public void addToGame(Game game) {
-
         game.addSprite(this);
     }
 
