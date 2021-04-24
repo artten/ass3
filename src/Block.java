@@ -19,6 +19,7 @@ public class Block implements Collidable, Sprite {
     /**
      * creates a new Block.
      * @param rectangle - the new block
+     * @param color - the color
      */
     public Block(Rectangle rectangle, java.awt.Color color) {
         this.block = rectangle;
@@ -44,25 +45,25 @@ public class Block implements Collidable, Sprite {
 
     /**
      * matrix with the velocity to change.
-     * @param - collisionPoint where the collision occurred
+     * @param collisionPoint - where the collision occurred
      * @return matrix with the velocity to change
      */
     private Point velocityChange(Point collisionPoint) {
         double width = block.getWidth();
         double height = block.getHeight();
-        if(collisionPoint.getX() == block.getBottomLeft().getX()
+        if (collisionPoint.getX() == block.getBottomLeft().getX()
                 || collisionPoint.getX() == block.getBottomRight().getX()) {
-            return new Point(-1,1);
+            return new Point(-1, 1);
         }
-        if(collisionPoint.getY() == block.getBottomLeft().getY()
+        if (collisionPoint.getY() == block.getBottomLeft().getY()
                 || collisionPoint.getY() == block.getUpperRight().getY()) {
-            return new Point(1,-1);
+            return new Point(1, -1);
         }
-        return new Point(1,1);
+        return new Point(1, 1);
     }
 
     /**
-     * return a new velocity for a ball
+     * return a new velocity for a ball.
      * @param collisionPoint - where the hit occurred
      * @param currentVelocity - current velocity of the ball
      * @return a new velocity for a ball
@@ -88,7 +89,7 @@ public class Block implements Collidable, Sprite {
     }
 
     /**
-     * what should the  block do after some time
+     * what should the  block do after some time.
      */
     @Override
     public void timePassed() {

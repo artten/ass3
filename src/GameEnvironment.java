@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * creates a new game
+ * creates a new game.
  */
 public class GameEnvironment {
     private List<Collidable> collidables;
@@ -36,21 +36,18 @@ public class GameEnvironment {
     public CollisionInfo getClosestCollision(Line trajectory) {
         CollisionInfo collisionInfo = null;
         for (Collidable collidable : this.collidables) {
-            //if(collidable instanceof Block) {
-                Rectangle block = collidable.getCollisionRectangle();
-                Point closestCollision = trajectory.closestIntersectionToStartOfLine(block);
-                if(closestCollision != null) {
-                    if(collisionInfo == null) {
-                        collisionInfo = new CollisionInfo(closestCollision,collidable);
-                    }
-                    else {
-                        if (trajectory.start().distance(closestCollision)
-                                < trajectory.start().distance(collisionInfo.collisionPoint())){
-                            collisionInfo = new CollisionInfo(closestCollision,collidable);
-                        }
+            Rectangle block = collidable.getCollisionRectangle();
+            Point closestCollision = trajectory.closestIntersectionToStartOfLine(block);
+            if (closestCollision != null) {
+                if (collisionInfo == null) {
+                    collisionInfo = new CollisionInfo(closestCollision, collidable);
+                } else {
+                    if (trajectory.start().distance(closestCollision)
+                            < trajectory.start().distance(collisionInfo.collisionPoint())) {
+                        collisionInfo = new CollisionInfo(closestCollision, collidable);
                     }
                 }
-           // }
+            }
         }
         return collisionInfo;
     }

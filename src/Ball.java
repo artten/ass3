@@ -31,6 +31,7 @@ public class Ball implements Sprite {
      * @param center - center of the ball
      * @param r - radius of the ball
      * @param color - color of the ball
+     * @param gameEnvironment - gameEnvironment of the ball
      */
     public Ball(Point center, double r, java.awt.Color color, GameEnvironment gameEnvironment) {
         this.center = center;
@@ -103,7 +104,7 @@ public class Ball implements Sprite {
 
     @Override
     public void timePassed() {
-        moveOneStep(this.center, this.gameEnvironment);
+        moveOneStep(this.center);
     }
 
     /**
@@ -134,35 +135,31 @@ public class Ball implements Sprite {
     /**
      *  function that makes a move with a this ball.
      * @param start - start point
-     * @param gameEnvironment - gameEnvironment
      */
-    public void moveOneStep(Point start, GameEnvironment gameEnvironment) {
+    public void moveOneStep(Point start) {
         Line trajectory = new Line(center, this.getVelocity().applyToPoint(this.center));
         if (gameEnvironment.getClosestCollision(trajectory) == null) {
             this.center = this.getVelocity().applyToPoint(this.center);
-        }
-        else {
+        } else {
             CollisionInfo collisionInfo = gameEnvironment.getClosestCollision(trajectory);
             Velocity oldVelocity = this.velocity;
             this.velocity = collisionInfo.collisionObject().hit(collisionInfo.collisionPoint(),
                     this.velocity);
             if (oldVelocity.getDx() != this.velocity.getDx()) {
-                if(this.velocity.getDx() > 0) {
+                if (this.velocity.getDx() > 0) {
                     this.center = new Point(collisionInfo.collisionPoint().getX() + radius + 2,
                             collisionInfo.collisionPoint().getY());
-                }
-                else {
-                    this.center = new Point(collisionInfo.collisionPoint().getX()- radius - 2,
+                } else {
+                    this.center = new Point(collisionInfo.collisionPoint().getX() - radius - 2,
                             collisionInfo.collisionPoint().getY());
                 }
 
             }
              if (oldVelocity.getDy() != this.velocity.getDy()) {
-                if(this.velocity.getDy() > 0) {
+                if (this.velocity.getDy() > 0) {
                     this.center = new Point(collisionInfo.collisionPoint().getX(),
                             collisionInfo.collisionPoint().getY() + radius + 2);
-                }
-                else {
+                } else {
                     this.center = new Point(collisionInfo.collisionPoint().getX(),
                             collisionInfo.collisionPoint().getY() - radius - 2);
                 }

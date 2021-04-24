@@ -1,8 +1,7 @@
 /**
- * @author 319339198
+ * @author 319339198.
  * linear Function
  */
-
 public class Function {
     private boolean vertical = false;
     private double slope;
@@ -96,7 +95,10 @@ public class Function {
             return  new Point(other.getConstant(), getYbyX(other.getConstant()));
         }
         double x = (other.getConstant() - this.constant) / (this.slope - other.getSlope());
-        if ((int) (getYbyX(x) * 100000) == (int) (other.getYbyX(x) * 100000)) {
+        if ((int) (getYbyX(x) * 100000) + 2 > (int) (other.getYbyX(x) * 100000)
+                && (int) (getYbyX(x) * 100000) - 2 < (int) (other.getYbyX(x) * 100000)
+                || ((int) (getYbyX(x) * 100000) > (int) (other.getYbyX(x) * 100000) - 2
+                && (int) (getYbyX(x) * 100000) < (int) (other.getYbyX(x) * 100000) + 2)) {
             return new Point(x, getYbyX(x));
         }
         return null;

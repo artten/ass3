@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * creates a new rectangle
+ * creates a new rectangle.
  */
 public class Rectangle {
     private Point upperLeft;
@@ -28,7 +28,7 @@ public class Rectangle {
     }
 
     /**
-     * check if line and rectangle intersect
+     * check if line and rectangle intersect.
      * @param line - the line to check with
      * @return list of point that intersect with the line
      */

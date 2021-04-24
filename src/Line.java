@@ -68,8 +68,8 @@ public class Line {
      * @return true if x is in the line else return false
      */
     public boolean xInTheLine(double x) {
-        if ((x <= this.start.getX() && x >= this.end.getX())
-                || (x >= this.start.getX() && x <= this.end.getX())) {
+        if ((x - 1 <= this.start.getX() && x + 1 >= this.end.getX())
+                || (x + 1 >= this.start.getX() && x - 1 <= this.end.getX())) {
             return true;
         }
         return false;
@@ -81,8 +81,8 @@ public class Line {
      * @return true if x is in the line else return false
      */
     public boolean yInTheLine(double y) {
-        if ((y <= this.start.getY() && y >= this.end.getY())
-                || (y >= this.start.getY() && y <= this.end.getY())) {
+        if ((y - 1 <= this.start.getY() && y + 1 >= this.end.getY())
+                || (y + 1 >= this.start.getY() && y - 1 <= this.end.getY())) {
             return true;
         }
         return false;

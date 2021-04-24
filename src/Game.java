@@ -7,19 +7,19 @@ import biuoop.GUI;
 import biuoop.KeyboardSensor;
 import biuoop.Sleeper;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Random;
 
 /**
- * the Game
+ * the Game.
  */
 public class Game {
     private SpriteCollection sprites;
     private GameEnvironment environment;
     private GUI gui;
     private KeyboardSensor keyboard;
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 600;
 
 
     /**
@@ -55,12 +55,12 @@ public class Game {
      * @param width - with of the paddle
      */
     public void initializeBalls(int num, Point startPoint, int width) {
-        for (int i = 0; i < num; i++ ) {
+        for (int i = 0; i < num; i++) {
             Random rn = new Random();
             int startWidth = rn.nextInt(width) + 1;
             Point newPoint = new Point((int) startPoint.getX() + startWidth, (int) startPoint.getY());
-            Ball ball =  new Ball(newPoint , 6, Color.BLACK, this.environment);
-            ball.setVelocity(0,5);
+            Ball ball =  new Ball(newPoint , 5, Color.BLACK, this.environment);
+            ball.setVelocity(0, 5);
             ball.addToGame(this);
         }
     }
@@ -71,14 +71,14 @@ public class Game {
      * @param color - color fpr the blocks
      */
     public void initializeBorder(int size, java.awt.Color color) {
-        for (int i = 0; i < 4; i++ ) {
-            Block block = new Block(new Rectangle(new Point(0,0),WIDTH,size), color);
+        for (int i = 0; i < 4; i++) {
+            Block block = new Block(new Rectangle(new Point(0, 0), WIDTH, size), color);
             block.addToGame(this);
-            block = new Block(new Rectangle(new Point(0,0),size,HEIGHT), color);
+            block = new Block(new Rectangle(new Point(0, 0), size, HEIGHT), color);
             block.addToGame(this);
-            block = new Block(new Rectangle(new Point(WIDTH - size,0),size,HEIGHT), color);
+            block = new Block(new Rectangle(new Point(WIDTH - size, 0), size, HEIGHT), color);
             block.addToGame(this);
-            block = new Block(new Rectangle(new Point(0,HEIGHT - size),WIDTH,size), color);
+            block = new Block(new Rectangle(new Point(0, HEIGHT - size), WIDTH, size), color);
             block.addToGame(this);
         }
     }
@@ -90,17 +90,18 @@ public class Game {
      * @param height - height of one block
      * @param shift - shift from the top and left sides
      */
-    public void initializeBlocks(int raws, int width, int height,int shift) {
+    public void initializeBlocks(int raws, int width, int height, int shift) {
         Block block;
-        for (int i = 0; i < raws; i++ ) {
+        for (int i = 0; i < raws; i++) {
             Random rand = new Random();
-            int numOfBlocks = rand.nextInt((WIDTH - shift)/width) + 1;
+            int numOfBlocks = 12;
             float r = rand.nextFloat();
             float g = rand.nextFloat();
             float b = rand.nextFloat();
             Color randomColor = new Color(r, g, b);
-            for (int j = 0; j < numOfBlocks; j++) {
-                block = new Block(new Rectangle(new Point(shift + j * width,shift + (height * (i+1)) + height * 5),width,height), randomColor);
+            for (int j = 0; j < numOfBlocks - i; j++) {
+                block = new Block(new Rectangle(new Point(WIDTH - (shift + j * width),
+                        shift + (height * (i + 1)) + height * 5), width, height), randomColor);
                 block.addToGame(this);
             }
         }
@@ -111,11 +112,11 @@ public class Game {
      */
     public void initialize() {
         java.awt.Color color = Color.red;
-        Block paddleBlock = new Block(new Rectangle(new Point(400,570),50,10), color);
+        Block paddleBlock = new Block(new Rectangle(new Point(400, 570), 50, 10), color);
         Paddle paddle = new Paddle(this.keyboard, paddleBlock);
         paddle.addToGame(this);
         color = Color.blue;
-        initializeBlocks(6, 50, 30, 20);
+        initializeBlocks(6, 50, 20, 20);
         initializeBorder(20, Color.GRAY);
         initializeBalls(2, new Point(400, 440), 50);
     }

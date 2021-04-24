@@ -11,8 +11,8 @@ public class Velocity {
      * @param dy - added y
      */
     public Velocity(double dx, double dy) {
-        this.dx = dx;
-        this.dy = dy;
+        this.dx = (int) dx;
+        this.dy = (int) dy;
     }
 
     /**
@@ -23,8 +23,8 @@ public class Velocity {
      */
     public static Velocity fromAngleAndSpeed(double angle, double speed) {
         double radians = Math.toRadians(angle);
-        double dy = speed * Math.sin(radians);
-        double dx = speed * Math.cos(radians);
+        double dy =  (int) speed * Math.sin(radians);
+        double dx = (int) speed * Math.cos(radians);
         return new Velocity(dx, dy);
     }
 

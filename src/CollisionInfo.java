@@ -1,6 +1,6 @@
 /**
  * @author 319339198
- * saves the colition info
+ * saves the colition info.
  */
 public class CollisionInfo {
     private Point collision;
@@ -11,13 +11,13 @@ public class CollisionInfo {
      * @param collision - collision point
      * @param collisionObject - the object to collide to
      */
-    public CollisionInfo (Point collision, Collidable collisionObject){
+    public CollisionInfo(Point collision, Collidable collisionObject) {
         this.collisionObject = collisionObject;
         this.collision = collision;
     }
 
     /**
-     * return the collision point
+     * return the collision point.
      * @return the collision point
      */
     public Point collisionPoint() {

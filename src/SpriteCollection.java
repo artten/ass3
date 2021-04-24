@@ -6,7 +6,7 @@ import biuoop.DrawSurface;
 import java.util.LinkedList;
 
 /**
- * collection of Sprites
+ * collection of Sprites.
  */
 public class SpriteCollection {
     private LinkedList<Sprite> allSprites;
@@ -19,14 +19,7 @@ public class SpriteCollection {
     }
 
     /**
-     * constructor.
-     */
-    public SpriteCollection(LinkedList<Sprite> s) {
-        this.allSprites = s;
-    }
-
-    /**
-     * add Sprite
+     * add Sprite.
      * @param s - a new Sprite to add
      */
     public void addSprite(Sprite s) {

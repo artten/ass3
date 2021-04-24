@@ -5,12 +5,17 @@
 import biuoop.DrawSurface;
 import biuoop.KeyboardSensor;
 
+/**
+ * the paddle.
+ */
 public class Paddle implements Sprite, Collidable {
     private biuoop.KeyboardSensor keyboard;
     private Block block;
 
     /**
      * constructor.
+     * @param keyboard - keyboard
+     * @param block - the block
      */
     public Paddle(biuoop.KeyboardSensor keyboard, Block block) {
         this.keyboard = keyboard;
@@ -18,7 +23,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     * move the paddle left
+     * move the paddle left.
      */
     public void moveLeft() {
         Rectangle rectangle = block.getCollisionRectangle();
@@ -28,7 +33,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     * move the paddle right
+     * move the paddle right.
      */
     public void moveRight() {
         Rectangle rectangle = block.getCollisionRectangle();
@@ -38,7 +43,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     *  draw the paddle
+     *  draw the paddle.
      * @param d - the surface
      */
     @Override
@@ -47,7 +52,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     * do something after time passes
+     * do something after time passes.
      */
     public void timePassed() {
         if (this.keyboard.isPressed(KeyboardSensor.LEFT_KEY)) {
@@ -59,7 +64,7 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     * return the rectangle
+     * return the rectangle.
      * @return the rectangle
      */
     public Rectangle getCollisionRectangle() {
@@ -67,44 +72,50 @@ public class Paddle implements Sprite, Collidable {
     }
 
     /**
-     * change velocity after thr hit
+     * change velocity after thr hit.
+     * @param collisionPoint - the collision point
+     * @return the number of the hit part
      */
     public int hitPart(Point collisionPoint) {
-        int hitPart = (int) Math.abs((this.block.getCollisionRectangle().getUpperLeft().getX() - collisionPoint.getX()));
-        int ok = (int) (this.block.getCollisionRectangle().getWidth())/5;
+        int hitPart = (int) Math.abs((this.block.getCollisionRectangle().getUpperLeft().getX()
+                - collisionPoint.getX()));
+        int ok = (int) (this.block.getCollisionRectangle().getWidth()) / 5;
         hitPart =  (hitPart / ok) + 1;
         return  hitPart;
     }
 
     /**
-     * change velocity after thr hit
+     * change velocity after thr hit.
      * @param collisionPoint - where was the it
      * @param currentVelocity - current velocity
-     * @return
+     * @return - return velocity
      */
     public Velocity hit(Point collisionPoint, Velocity currentVelocity) {
 
         int hitPart = hitPart(collisionPoint);
         if (hitPart == 1) {
-            return  Velocity.fromAngleAndSpeed(210,5);
+            return  Velocity.fromAngleAndSpeed(210, 5);
         }
         if (hitPart == 2) {
-            return  Velocity.fromAngleAndSpeed(240,5);
+            return  Velocity.fromAngleAndSpeed(240, 5);
         }
         if (hitPart == 3) {
             return new Velocity(currentVelocity.getDx(), -1 * currentVelocity.getDy());
         }
         if (hitPart == 4) {
-            return  Velocity.fromAngleAndSpeed(300,5);
+            return  Velocity.fromAngleAndSpeed(300, 5);
         }
         if (hitPart == 5) {
-            return  Velocity.fromAngleAndSpeed(330,5);
+            return  Velocity.fromAngleAndSpeed(330, 5);
         }
         Velocity velocity = new Velocity(1, 1);
         return velocity;
     }
 
-    // Add this paddle to the game.
+    /**
+     * Add this paddle to the game.
+     * @param g - the game
+     */
     public void addToGame(Game g) {
         g.addSprite(this);
         g.addCollidable(this);
